@@ -4877,8 +4877,6 @@ void AI::MovePlayer(Ship &ship, Command &activeCommands)
 				}
 				message += " in this system. Landing on " + target->DisplayName() + ".";
 			}
-			else
-				message = "Landing on " + target->DisplayName() + ".";
 		}
 		if(!message.empty())
 			Messages::Add({message, messageCategory});
