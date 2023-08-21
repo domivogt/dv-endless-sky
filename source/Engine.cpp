@@ -2163,7 +2163,7 @@ void Engine::SendHails()
 		return;
 	}
 
-	if(Random::Int(600) || player.IsDead() || ships.empty())
+	if(Random::Int(2500) || player.IsDead() || ships.empty())
 		return;
 
 	vector<shared_ptr<const Ship>> canSend;
