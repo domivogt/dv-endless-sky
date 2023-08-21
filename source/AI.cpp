@@ -560,10 +560,6 @@ void AI::UpdateKeys(PlayerInfo &player, const Command &activeCommands)
 	escortsAreFrugal = ammoUsage == Preferences::EscortAmmoUsage::FRUGALLY;
 	escortsUseAmmo = escortsAreFrugal || ammoUsage == Preferences::EscortAmmoUsage::ALWAYS;
 
-	if(!autoPilot.Has(Command::STOP) && activeCommands.Has(Command::STOP)
-			&& flagship->Velocity().Length() > VELOCITY_ZERO)
-		Messages::Add(*GameData::Messages().Get("coming to a stop"));
-
 	autoPilot |= activeCommands;
 	if(ShouldCancelAutopilot(*flagship, activeCommands))
 	{
