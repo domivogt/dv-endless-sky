@@ -195,7 +195,11 @@ void StarField::Draw(const Point &blur, const System *system) const
 
 	// Draw the starfield unless it is disabled in the preferences.
 	double zoom = baseZoom;
-	if(Preferences::Has(Preferences::DRAW_STARFIELD) && density > 0.)
+	const auto drawFieldsSetting = Preferences::GetDrawFields();
+	bool drawStarfield = (drawFieldsSetting == Preferences::DrawFields::BOTH ||
+			      drawFieldsSetting == Preferences::DrawFields::STARS);
+
+	if(drawStarfield && density > 0.)
 	{
 		glUseProgram(shader->Object());
 		if(OpenGL::HasVaoSupport())

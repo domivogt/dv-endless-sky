@@ -106,6 +106,13 @@ public:
 		FAST,
 	};
 
+	enum class DrawFields : int_fast8_t {
+		OFF = 0,
+		ASTEROIDS,
+		STARS,
+		BOTH,
+	};
+
 	enum class ExtendedJumpEffects : int_fast8_t {
 		OFF = 0,
 		MEDIUM,
@@ -255,6 +262,9 @@ public:
 	/// Background parallax setting, either "fast", "fancy", or "off".
 	static BackgroundParallax GetBackgroundParallax();
 
+	/// Draw fields settings, either "asteroids", "stars", "both" or "off".
+	static DrawFields GetDrawFields();
+
 	/// Extended jump effects setting, either "off", "medium", or "heavy".
 	static ExtendedJumpEffects GetExtendedJumpEffects();
 
@@ -323,7 +333,7 @@ public:
 	static const std::string DEFER_LOADING_IMAGES;
 	static const std::string DESTINATION_NOTIFICATION;
 	static const std::string DRAW_BACKGROUND_HAZE;
-	static const std::string DRAW_STARFIELD;
+	static const std::string DRAW_FIELDS;
 	static const std::string ESCORT_AMMO_USAGE;
 	static const std::string EXTENDED_JUMP_EFFECTS;
 	static const std::string FF_CAPSLOCK_SYNC;

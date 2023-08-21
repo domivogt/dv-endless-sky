@@ -1610,8 +1610,8 @@ tip "Defer loading images"
 tip "Draw background haze"
 	`Draw the background haze when in flight.`
 
-tip "Draw starfield"
-	`Draw the background starfield when in flight.`
+tip "Draw starfield and asteroids"
+	`Draw the background starfield and/or the background asteroids when in flight.`
 
 tip "Fixed starfield zoom"
 	`Draw the background starfield with a fixed zoom level instead of changing with the view zoom level.`

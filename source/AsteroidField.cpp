@@ -20,6 +20,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "shader/DrawList.h"
 #include "image/Mask.h"
 #include "Minable.h"
+#include "Preferences.h"
 #include "Projectile.h"
 #include "Random.h"
 #include "Screen.h"
@@ -116,8 +117,13 @@ void AsteroidField::Step(vector<Visual> &visuals, list<shared_ptr<Flotsam>> &flo
 // Draw the asteroids, centered on the given location.
 void AsteroidField::Draw(DrawList &draw, const Point &center, double zoom) const
 {
-	for(const Asteroid &asteroid : asteroids)
-		asteroid.Draw(draw, center, zoom);
+	const auto drawFieldsSetting = Preferences::GetDrawFields();
+	bool drawAsteroids = (drawFieldsSetting == Preferences::DrawFields::BOTH ||
+			      drawFieldsSetting == Preferences::DrawFields::ASTEROIDS);
+
+	if (drawAsteroids)
+		for(const Asteroid &asteroid : asteroids)
+			asteroid.Draw(draw, center, zoom);
 	for(const shared_ptr<Minable> &minable : minables)
 		draw.Add(*minable);
 }

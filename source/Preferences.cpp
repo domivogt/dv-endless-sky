@@ -160,7 +160,7 @@ const string Preferences::DATE_FORMAT = "date format";
 const string Preferences::DEFER_LOADING_IMAGES = "Defer loading images";
 const string Preferences::DESTINATION_NOTIFICATION = "notification settings";
 const string Preferences::DRAW_BACKGROUND_HAZE = "Draw background haze";
-const string Preferences::DRAW_STARFIELD = "Draw starfield";
+const string Preferences::DRAW_FIELDS = "Draw starfield and asteroids";
 const string Preferences::ESCORT_AMMO_USAGE = "Escort ammo usage";
 const string Preferences::EXTENDED_JUMP_EFFECTS = "Extended jump effects";
 const string Preferences::FF_CAPSLOCK_SYNC = "Sync FF to CapsLock";
@@ -257,7 +257,8 @@ void Preferences::Init()
 	settings[DEFER_LOADING_IMAGES] = Setting::OnOff("Defer loading images", false);
 	settings[DESTINATION_NOTIFICATION] = Setting::List("Notify on destination", {"off", "message", "both"}, 1);
 	settings[DRAW_BACKGROUND_HAZE] = Setting::OnOff("Draw background haze", true);
-	settings[DRAW_STARFIELD] = Setting::OnOff("Draw starfield", true);
+	settings[DRAW_FIELDS] = Setting::List("Draw starfield and asteroids", {"off", "asteroids", "starfield", "both"},
+		3);
 	settings[ESCORT_AMMO_USAGE] = Setting::List("Escorts expend ammo", {"never", "frugally", "always"}, 1);
 
 	settings[EXTENDED_JUMP_EFFECTS] = Setting::List("Extended jump effects", {"off", "medium", "heavy"}, 0);
@@ -923,6 +924,13 @@ const vector<double> &Preferences::Zooms()
 Preferences::BackgroundParallax Preferences::GetBackgroundParallax()
 {
 	return static_cast<BackgroundParallax>(settings[PARALLAX].Index());
+}
+
+
+
+Preferences::DrawFields Preferences::GetDrawFields()
+{
+	return static_cast<DrawFields>(settings[DRAW_FIELDS].Index());
 }
 
 

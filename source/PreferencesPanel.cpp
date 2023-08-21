@@ -669,7 +669,7 @@ void PreferencesPanel::DrawSettings()
 		Preferences::CAMERA_ACCELERATION,
 		Preferences::MOTION_BLUR,
 		Preferences::DRAW_BACKGROUND_HAZE,
-		Preferences::DRAW_STARFIELD,
+		Preferences::DRAW_FIELDS,
 		Preferences::FIXED_STARFIELD_ZOOM,
 		Preferences::PARALLAX,
 		Preferences::ANIMATE_MENU_BACKGROUND,
