@@ -3018,7 +3018,9 @@ void Engine::CreateStatusOverlays()
 		Preferences::OverlayType::FLAGSHIP,
 		Preferences::OverlayType::ESCORT,
 		Preferences::OverlayType::ENEMY,
-		Preferences::OverlayType::NEUTRAL
+		Preferences::OverlayType::ENEMY_FIGHTERS,
+		Preferences::OverlayType::NEUTRAL,
+		Preferences::OverlayType::NEUTRAL_FIGHTERS
 	};
 
 	map<Preferences::OverlayType, Preferences::OverlayState> overlaySettings;
@@ -3037,16 +3039,28 @@ void Engine::CreateStatusOverlays()
 		static auto FLAGSHIP = Preferences::OverlayType::FLAGSHIP;
 		static auto FRIENDLY = Preferences::OverlayType::ESCORT;
 		static auto HOSTILE = Preferences::OverlayType::ENEMY;
+		static auto HOSTILE_FIGHTERS = Preferences::OverlayType::ENEMY_FIGHTERS;
 		static auto NEUTRAL = Preferences::OverlayType::NEUTRAL;
+		static auto NEUTRAL_FIGHTERS = Preferences::OverlayType::NEUTRAL_FIGHTERS;
 
 		if(it == flagship)
 			EmplaceStatusOverlay(it, overlaySettings[FLAGSHIP], Status::Type::FLAGSHIP, it->Cloaking());
 		else if(it->GetGovernment()->IsEnemy())
-			EmplaceStatusOverlay(it, overlaySettings[HOSTILE], Status::Type::HOSTILE, it->Cloaking());
+		{
+			if (it->CanBeCarried())
+				EmplaceStatusOverlay(it, overlaySettings[HOSTILE_FIGHTERS], Status::Type::HOSTILE, it->Cloaking());
+			else
+				EmplaceStatusOverlay(it, overlaySettings[HOSTILE], Status::Type::HOSTILE, it->Cloaking());
+		}
 		else if(it->IsYours() || it->GetPersonality().IsEscort())
 			EmplaceStatusOverlay(it, overlaySettings[FRIENDLY], Status::Type::FRIENDLY, it->Cloaking());
 		else
-			EmplaceStatusOverlay(it, overlaySettings[NEUTRAL], Status::Type::NEUTRAL, it->Cloaking());
+		{
+			if (it->CanBeCarried())
+				EmplaceStatusOverlay(it, overlaySettings[NEUTRAL_FIGHTERS], Status::Type::NEUTRAL, it->Cloaking());
+			else
+                               EmplaceStatusOverlay(it, overlaySettings[NEUTRAL], Status::Type::NEUTRAL, it->Cloaking());
+		}
 	}
 }
 

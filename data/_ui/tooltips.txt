@@ -1668,8 +1668,14 @@ tip "   Show escort overlays"
 tip "   Show enemy overlays"
 	`Display status overlays over top of hostile ships when in flight.`
 
+tip "   Show enemy fighters overlays"
+	`Display status overlays over top of hostile fighters when in flight.`
+
 tip "   Show neutral overlays"
 	`Display status overlays over top of friendly and neutral ships when in flight.`
+
+tip "   Show neutral fighters overlays"
+	`Display status overlays over top of neutral fighters when in flight.`
 
 tip "Show missile overlays"
 	`Display an overlay on hostile missiles. The overlay indicates the danger of the missiles, with more powerful missiles relative to your flagship's HP being indicated more intensely.`

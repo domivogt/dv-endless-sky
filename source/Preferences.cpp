@@ -132,7 +132,9 @@ namespace {
 		{Preferences::OverlayType::FLAGSHIP, Preferences::OverlayState::ON},
 		{Preferences::OverlayType::ESCORT, Preferences::OverlayState::ON},
 		{Preferences::OverlayType::ENEMY, Preferences::OverlayState::ON},
+		{Preferences::OverlayType::ENEMY_FIGHTERS, Preferences::OverlayState::ON},
 		{Preferences::OverlayType::NEUTRAL, Preferences::OverlayState::OFF},
+		{Preferences::OverlayType::NEUTRAL_FIGHTERS, Preferences::OverlayState::OFF},
 	};
 
 	int previousSaveCount = 3;
@@ -205,7 +207,9 @@ const string Preferences::STATUS_OVERLAYS_ALL = "Show all status overlays";
 const string Preferences::STATUS_OVERLAYS_FLAGSHIP = "Show flagship overlay";
 const string Preferences::STATUS_OVERLAYS_ESCORT = "Show escort overlays";
 const string Preferences::STATUS_OVERLAYS_ENEMY = "Show enemy overlays";
+const string Preferences::STATUS_OVERLAYS_ENEMY_FIGHTERS = "Show enemy fighters overlays";
 const string Preferences::STATUS_OVERLAYS_NEUTRAL = "Show neutral overlays";
+const string Preferences::STATUS_OVERLAYS_NEUTRAL_FIGHTERS = "Show neutral fighters overlays";
 const string Preferences::TEXT_ALIGNMENT = "Text alignment";
 const string Preferences::TEXTURE_FILTERING = "Texture filtering";
 const string Preferences::TOOLTIP_ACTIVATION_TIME = "Tooltip activation time";
@@ -407,6 +411,8 @@ void Preferences::Init()
 		Preferences::CycleStatusOverlays(Preferences::OverlayType::ENEMY);
 	});
 
+	settings[STATUS_OVERLAYS_ENEMY_FIGHTERS] = Setting::OnOff("   Show enemy fighters overlays", true);
+
 	settings[STATUS_OVERLAYS_NEUTRAL] = Setting::Unique("   Show neutral overlays");
 	settings[STATUS_OVERLAYS_NEUTRAL].SetDisplayFunc([]() -> pair<string, bool> {
 		string text = Preferences::StatusOverlaysSetting(Preferences::OverlayType::NEUTRAL);
@@ -416,6 +422,8 @@ void Preferences::Init()
 	settings[STATUS_OVERLAYS_NEUTRAL].SetOnToggleFunc([](UI *) -> void {
 		Preferences::CycleStatusOverlays(Preferences::OverlayType::NEUTRAL);
 	});
+
+	settings[STATUS_OVERLAYS_NEUTRAL_FIGHTERS] = Setting::OnOff("   Show neutral fighters overlays", true);
 
 	settings[TEXT_ALIGNMENT] = Setting::List("Text alignment", {"left", "center", "right", "justified"}, 3, true);
 	settings[TEXT_ALIGNMENT].SetOnToggleFunc([](UI *) -> void { CustomEvents::SendAdjustText(); });
@@ -703,7 +711,9 @@ void Preferences::Save()
 	out.Write(STATUS_OVERLAYS_FLAGSHIP, statusOverlaySettings[OverlayType::FLAGSHIP].ToInt());
 	out.Write(STATUS_OVERLAYS_ESCORT, statusOverlaySettings[OverlayType::ESCORT].ToInt());
 	out.Write(STATUS_OVERLAYS_ENEMY, statusOverlaySettings[OverlayType::ENEMY].ToInt());
+	out.Write(STATUS_OVERLAYS_ENEMY_FIGHTERS, statusOverlaySettings[OverlayType::ENEMY_FIGHTERS].ToInt());
 	out.Write(STATUS_OVERLAYS_NEUTRAL, statusOverlaySettings[OverlayType::NEUTRAL].ToInt());
+	out.Write(STATUS_OVERLAYS_NEUTRAL_FIGHTERS, statusOverlaySettings[OverlayType::NEUTRAL_FIGHTERS].ToInt());
 	out.Write(PREVIOUS_SAVES, previousSaveCount);
 
 	out.Write();

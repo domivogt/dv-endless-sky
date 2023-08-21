@@ -63,7 +63,9 @@ public:
 		FLAGSHIP,
 		ESCORT,
 		ENEMY,
+		ENEMY_FIGHTERS,
 		NEUTRAL,
+		NEUTRAL_FIGHTERS,
 	};
 
 	enum class TurretOverlays : int_fast8_t {
@@ -368,7 +370,9 @@ public:
 	static const std::string STATUS_OVERLAYS_FLAGSHIP;
 	static const std::string STATUS_OVERLAYS_ESCORT;
 	static const std::string STATUS_OVERLAYS_ENEMY;
+	static const std::string STATUS_OVERLAYS_ENEMY_FIGHTERS;
 	static const std::string STATUS_OVERLAYS_NEUTRAL;
+	static const std::string STATUS_OVERLAYS_NEUTRAL_FIGHTERS;
 	static const std::string TEXT_ALIGNMENT;
 	static const std::string TEXTURE_FILTERING;
 	static const std::string TOOLTIP_ACTIVATION_TIME;
