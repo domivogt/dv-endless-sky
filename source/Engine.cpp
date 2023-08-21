@@ -1482,10 +1482,9 @@ void Engine::EnterSystem()
 	Audio::PlayMusic(system->MusicName());
 	GameData::SetHaze(system->Haze(), false);
 
-	Messages::Add({"Entering the " + system->DisplayName() + " system on "
-		+ today.ToString() + (system->IsInhabited(flagship) ?
-		"." : ". No inhabited planets detected."),
-		GameData::MessageCategories().Get("daily")});
+	if (!system->IsInhabited(flagship))
+		Messages::Add({"No inhabited planets detected.",
+				GameData::MessageCategories().Get("daily")});
 
 	// Preload landscapes and determine if the player used a wormhole.
 	// (It is allowed for a wormhole's exit point to have no sprite.)
