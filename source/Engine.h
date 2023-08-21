@@ -304,6 +304,8 @@ private:
 	// Keep track of who has asked for help in fighting whom.
 	std::map<const Government *, std::weak_ptr<const Ship>> grudge;
 	int grudgeTime = 0;
+	// Limit fleet spawn frequency.
+	int fleetSpawnDelay = 0;
 
 	CollisionSet shipCollisions;
 

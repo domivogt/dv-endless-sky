@@ -2054,6 +2054,11 @@ void Engine::SpawnFleets()
 		player.ClearActiveInFlightMission();
 	}
 
+	if (fleetSpawnDelay > 0)
+	{
+		--fleetSpawnDelay;
+		return;
+	}
 	// Non-mission NPCs spawn at random intervals in neighboring systems,
 	// or coming from planets in the current one.
 	double fleetMultiplier = GameData::GetGamerules().FleetMultiplier();
@@ -2074,6 +2079,12 @@ void Engine::SpawnFleets()
 				continue;
 
 			fleet.Get()->Enter(*player.GetSystem(), newShips);
+			// Suppress spawning new fleets for a short while to prevent that
+			// absurd amounts of fleets spawn at the same time.
+			if (fleetSpawnDelay == 0)
+				fleetSpawnDelay = 10;
+			else
+				fleetSpawnDelay *= 2;
 		}
 }
 
