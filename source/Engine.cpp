@@ -2157,6 +2157,12 @@ void Engine::GenerateWeather()
 // At random intervals, have one of the ships in the game send you a hail.
 void Engine::SendHails()
 {
+	if(hailDelay)
+	{
+		--hailDelay;
+		return;
+	}
+
 	if(Random::Int(600) || player.IsDead() || ships.empty())
 		return;
 
@@ -2178,6 +2184,9 @@ void Engine::SendHails()
 
 	// Generate a random hail message.
 	SendMessage(source, source->GetHail(player.GetSubstitutions()));
+
+	// Suppress hails for a while to avoid high frequency hail message spam.
+	hailDelay = 900;
 }
 
 
