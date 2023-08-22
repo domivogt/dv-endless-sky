@@ -603,6 +603,10 @@ void PlayerInfo::Load(const filesystem::path &path, const shared_ptr<PilotProfil
 		maxEscortCrew = pilot->GetGamerules().GetDefaultMaxEscortCrew();
 	if(!adminCap.has_value())
 		adminCap = pilot->GetGamerules().GetDefaultAdminCap();
+	if (planet)
+		NeedsSaving(false);
+	else
+		NeedsSaving(true);
 }
 
 

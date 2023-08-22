@@ -286,7 +286,11 @@ bool PlanetPanel::KeyDown(SDL_Keycode key, Uint16 mod, const Command &command, b
 		requestedLaunch = true;
 		return true;
 	}
-	else if(key == 'l')
+	bool playerNeedsSaving = player.NeedsSaving();
+	// If the player does anything on the planet except taking off, require
+	// an autosave the next time she leaves the planet.
+	player.NeedsSaving(true);
+	if(key == 'l')
 	{
 		sound = UI::UISound::NONE;
 		selectedPanel = nullptr;
@@ -322,7 +326,11 @@ bool PlanetPanel::KeyDown(SDL_Keycode key, Uint16 mod, const Command &command, b
 	else if(key == 'h' && hasAccess && planet.GetPort().HasService(Port::ServicesType::HireCrew))
 		selectedPanel = hiring;
 	else
+	{
+		// No action, restore the previous state of the flag.
+		player.NeedsSaving(playerNeedsSaving);
 		return false;
+	}
 
 	// If we are here, it is because something happened to change the selected
 	// planet UI panel. So, we need to push the new and pop the old selected panel:
@@ -602,6 +610,10 @@ void PlanetPanel::TakeOff(const bool distributeCargo)
 {
 	flightChecks.clear();
 	player.Save();
+	if (player.NeedsSaving())
+		player.Save();
+	else
+		player.NeedsSaving(true);
 	player.ApplyPermadeath();
 	if(player.TakeOff(GetUI(), distributeCargo))
 	{

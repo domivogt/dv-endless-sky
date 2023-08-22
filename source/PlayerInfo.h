@@ -99,6 +99,9 @@ public:
 	bool LoadRecent();
 	// Save this player (using the Identifier() as the file name).
 	void Save() const;
+	// The games does not need to be saved right after loading.
+	bool NeedsSaving() const { return needsSaving; };
+	void NeedsSaving(bool flag) { needsSaving = flag; };
 	// Apply the effects of permadeath, if this player has permadeath mode enabled.
 	void ApplyPermadeath() const;
 
@@ -491,6 +494,7 @@ private:
 	std::string filePath;
 	std::shared_ptr<PilotProfile> pilot;
 
+	bool needsSaving = true;
 	Date date;
 	SystemEntry entry = SystemEntry::TAKE_OFF;
 	const System *previousSystem = nullptr;
