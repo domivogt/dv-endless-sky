@@ -274,7 +274,7 @@ string Account::Step(int64_t assets, int64_t salaries, int64_t maintenance)
 	else if(missedPayment)
 		out << " ";
 
-	out << "You paid ";
+	out << "You pay ";
 
 	map<string, int64_t> typesPaid;
 	if(salariesPaid)
