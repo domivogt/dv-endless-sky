@@ -5708,17 +5708,24 @@ void Ship::StepTargeting()
 		}
 		if(isBoarding && !pilotError)
 		{
-			Angle facing = angle;
-			bool left = target->Unit().Cross(facing.Unit()) < 0.;
-			double turn = left - !left;
+			Angle tfacing = target->Facing();
+			Angle diff = tfacing - angle;
+			// Allow boarding when ships look in the same or in opposite directions..
+			if (abs(diff.Degrees()) > 90.0)
+			{
+				// Align in opposite directions.
+				tfacing += 180;
+				diff = tfacing - angle;
+			}
 
-			// Check if the ship will still be pointing to the same side of the target
-			// angle if it turns by this amount.
-			facing += TurnRate() * turn;
-			bool stillLeft = target->Unit().Cross(facing.Unit()) < 0.;
-			if(left != stillLeft)
+			double turn;
+			if (abs(diff.Degrees()) <= TurnRate())
+				// Don't overshoot the target angle.
 				turn = 0.;
-			angle += TurnRate() * turn;
+			else
+				turn = (diff.Degrees() < 0.) ? -TurnRate() : TurnRate();
+
+			angle += turn;
 
 			velocity += dv.Unit() * .1;
 			position += dp.Unit() * .5;
