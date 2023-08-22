@@ -5677,14 +5677,15 @@ void PlayerInfo::DoAccounting()
 	FleetBalance balance = MaintenanceAndReturns();
 	if(balance.assetsReturns)
 		income["based on outfits and ships"] = balance.assetsReturns;
+	string message;
+	string message2;
 	if(!income.empty())
 	{
-		string message = "You receive " + Format::List<map, string, int64_t>(income,
+		message += "You receive " + Format::List<map, string, int64_t>(income,
 			[](const pair<string, int64_t> &it)
 			{
 				return Format::CreditString(it.second) + ' ' + it.first;
-			}) + '.';
-		Messages::Add({message, GameData::MessageCategories().Get("force log")});
+			}) + '.' + ' ';
 		accounts.AddCredits(salariesIncome + tributeIncome + balance.assetsReturns);
 
 		if(tributeIncome)
@@ -5704,10 +5705,9 @@ void PlayerInfo::DoAccounting()
 			}
 			if(!governments.empty())
 			{
-				message = "You have lost reputation with "
+				message2 = "You have lost reputation with "
 					+ Format::List(governments, [](const Government *gov){ return "the " + gov->DisplayName(); })
 					+ " due to active tributes.";
-				Messages::Add({message, GameData::MessageCategories().Get("normal")});
 			}
 		}
 	}
@@ -5742,9 +5742,11 @@ void PlayerInfo::DoAccounting()
 
 	// Have the player pay salaries, mortgages, etc. and print a message that
 	// summarizes the payments that were made.
-	string message = accounts.Step(assets, Salaries(), balance.maintenanceCosts);
+	message += accounts.Step(assets, Salaries(), balance.maintenanceCosts);
 	if(!message.empty())
 		Messages::Add({message, GameData::MessageCategories().Get("force log")});
+	if(!message2.empty())
+		Messages::Add({message2, GameData::MessageCategories().Get("normal")});
 }
 
 
